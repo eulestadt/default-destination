@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Default Destination</title>
+    <link rel="stylesheet" href="./popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Default Destination</h1>
+      <label class="toggle-row">
+        <input type="checkbox" id="paused-toggle" />
+        <span id="paused-label">Redirects active</span>
+      </label>
+    </header>
+
+    <section id="status-section" class="card">
+      <p class="label">This tab</p>
+      <p id="status-text" class="status">Loading…</p>
+      <p id="url-text" class="url muted"></p>
+    </section>
+
+    <div class="actions">
+      <button id="open-original" type="button" disabled>Open original this tab</button>
+      <button id="open-options" type="button" class="secondary">Open Options</button>
+    </div>
+
+    <section id="rules-section">
+      <p class="label">Rules</p>
+      <ul id="rule-list"></ul>
+      <p id="no-rules" class="muted hidden">
+        No rules yet.
+        <button type="button" class="linkish" id="add-rule-cta">Add a site pair</button>
+      </p>
+    </section>
+
+    <script type="module" src="./popup.ts"></script>
+  </body>
+</html>

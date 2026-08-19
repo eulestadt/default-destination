@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Default Destination — Options</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div>
+        <h1>Default Destination</h1>
+        <p class="subtitle">
+          Enter a site, land on the page you actually use. Back and account switches still reach the
+          original.
+        </p>
+      </div>
+      <div class="header-actions">
+        <label class="toggle-row">
+          <input type="checkbox" id="global-paused" />
+          <span>Pause all redirects</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="debug-logging" />
+          <span>Debug logging</span>
+        </label>
+      </div>
+    </header>
+
+    <div id="storage-notice" class="notice hidden"></div>
+    <div id="error-banner" class="error-banner hidden"></div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Site pairs</h2>
+        <div class="panel-actions">
+          <button type="button" id="import-btn" class="secondary">Import JSON</button>
+          <button type="button" id="export-btn" class="secondary">Export JSON</button>
+          <button type="button" id="add-rule-btn">Add rule</button>
+        </div>
+      </div>
+
+      <div id="empty-state" class="empty hidden">
+        <p>No redirect rules yet.</p>
+        <button type="button" id="empty-add-btn">Add your first site pair</button>
+      </div>
+
+      <ul id="rules-overview" class="rule-cards"></ul>
+    </section>
+
+    <section id="editor-panel" class="panel hidden">
+      <h2 id="editor-title">Edit rule</h2>
+      <form id="rule-form">
+        <div class="field">
+          <label for="rule-name">Name</label>
+          <input id="rule-name" type="text" required maxlength="80" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="rule-source">Source URL (what you enter)</label>
+            <input id="rule-source" type="url" required placeholder="https://calendar.google.com/" />
+          </div>
+          <div class="field">
+            <label for="rule-destination">Destination URL</label>
+            <input
+              id="rule-destination"
+              type="url"
+              required
+              placeholder="https://calendar.google.com/calendar/u/1"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="recipe-select">Recipe</label>
+            <select id="recipe-select">
+              <option value="">Generic (no recipe)</option>
+              <option value="google-calendar-account">Google Calendar account</option>
+              <option value="google-workspace-account">Google Workspace (Gmail, Drive, …)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="google-index">Google account index (/u/N)</label>
+            <input id="google-index" type="number" min="0" max="20" value="1" />
+          </div>
+        </div>
+
+        <details class="advanced">
+          <summary>Advanced</summary>
+          <div class="field-row">
+            <div class="field">
+              <label for="match-mode">Match mode</label>
+              <select id="match-mode">
+                <option value="prefix">Prefix</option>
+                <option value="host">Host</option>
+                <option value="exact">Exact</option>
+                <option value="wildcard">Wildcard</option>
+                <option value="regex">Regex</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dest-mode">Destination mode</label>
+              <select id="dest-mode">
+                <option value="rewrite">Rewrite (preserve path)</option>
+                <option value="fixed">Fixed URL</option>
+              </select>
+            </div>
+          </div>
+          <div class="checks">
+            <label><input id="preserve-query" type="checkbox" checked /> Preserve query</label>
+            <label><input id="preserve-hash" type="checkbox" checked /> Preserve hash</label>
+            <label><input id="rule-enabled" type="checkbox" checked /> Rule enabled</label>
+          </div>
+        </details>
+
+        <div id="form-errors" class="form-errors hidden"></div>
+
+        <div class="form-actions">
+          <button type="submit" id="save-rule-btn">Save rule</button>
+          <button type="button" id="cancel-edit-btn" class="secondary">Cancel</button>
+          <button type="button" id="delete-rule-btn" class="danger hidden">Delete</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel privacy">
+      <h2>Privacy</h2>
+      <p>
+        Default Destination stores your redirect rules in Chrome sync or local extension storage. Tab
+        bypass flags live in session storage and clear when the browser session ends. No page content
+        is read and no data is sent to any server.
+      </p>
+      <p class="muted">
+        Google’s <code>/u/N</code> paths reflect account order in this Chrome profile, not a stable
+        email address. If accounts reorder, update the index in your rule.
+      </p>
+    </section>
+
+    <input type="file" id="import-file" accept="application/json" class="hidden" />
+
+    <script type="module" src="./options.ts"></script>
+  </body>
+</html>

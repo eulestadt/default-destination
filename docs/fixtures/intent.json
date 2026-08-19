@@ -1,0 +1,108 @@
+{
+  "description": "classifyIntent() inputs. previousUrl is the last committed main-frame URL on the tab, or null for a new tab.",
+  "cases": [
+    {
+      "id": "new-tab-typed-root",
+      "previousUrl": null,
+      "url": "https://calendar.google.com/",
+      "transitionType": "typed",
+      "transitionQualifiers": ["from_address_bar"],
+      "lastRedirect": null,
+      "expected": "enter"
+    },
+    {
+      "id": "typed-explicit-u0",
+      "previousUrl": "https://example.com/",
+      "url": "https://calendar.google.com/calendar/u/0/r",
+      "transitionType": "typed",
+      "transitionQualifiers": ["from_address_bar"],
+      "lastRedirect": null,
+      "recipe": "google-calendar-account",
+      "expected": "explicit_source"
+    },
+    {
+      "id": "bookmark-root",
+      "previousUrl": null,
+      "url": "https://calendar.google.com/",
+      "transitionType": "auto_bookmark",
+      "transitionQualifiers": [],
+      "lastRedirect": null,
+      "expected": "enter"
+    },
+    {
+      "id": "back-to-source",
+      "previousUrl": "https://calendar.google.com/calendar/u/1/r",
+      "url": "https://calendar.google.com/",
+      "transitionType": "link",
+      "transitionQualifiers": ["forward_back"],
+      "lastRedirect": {
+        "from": "https://calendar.google.com/",
+        "to": "https://calendar.google.com/calendar/u/1/"
+      },
+      "expected": "back_forward"
+    },
+    {
+      "id": "account-switcher",
+      "previousUrl": "https://calendar.google.com/calendar/u/1/r",
+      "url": "https://calendar.google.com/calendar/u/0/r",
+      "transitionType": "link",
+      "transitionQualifiers": [],
+      "lastRedirect": null,
+      "expected": "same_origin_nav"
+    },
+    {
+      "id": "external-link-enter",
+      "previousUrl": "https://mail.google.com/mail/u/1/",
+      "url": "https://calendar.google.com/calendar/r/eventedit/abc",
+      "transitionType": "link",
+      "transitionQualifiers": [],
+      "lastRedirect": null,
+      "expected": "enter"
+    },
+    {
+      "id": "accounts-chooser",
+      "previousUrl": "https://accounts.google.com/AccountChooser",
+      "url": "https://calendar.google.com/calendar/u/0/r",
+      "transitionType": "link",
+      "transitionQualifiers": ["server_redirect"],
+      "lastRedirect": null,
+      "chooserOrigins": ["https://accounts.google.com"],
+      "expected": "chooser"
+    },
+    {
+      "id": "our-redirect-landing",
+      "previousUrl": "https://calendar.google.com/",
+      "url": "https://calendar.google.com/calendar/u/1/",
+      "transitionType": "link",
+      "transitionQualifiers": [],
+      "lastRedirect": {
+        "from": "https://calendar.google.com/",
+        "to": "https://calendar.google.com/calendar/u/1/"
+      },
+      "withinMs": 500,
+      "expected": "our_redirect"
+    },
+    {
+      "id": "google-followup-u0-still-enter",
+      "previousUrl": "https://calendar.google.com/",
+      "url": "https://calendar.google.com/calendar/u/0/r",
+      "transitionType": "link",
+      "transitionQualifiers": ["server_redirect"],
+      "entryChain": {
+        "entryUrl": "https://calendar.google.com/",
+        "startedAt": 0
+      },
+      "lastRedirect": null,
+      "expected": "enter"
+    },
+    {
+      "id": "reload-destination",
+      "previousUrl": "https://calendar.google.com/calendar/u/1/r",
+      "url": "https://calendar.google.com/calendar/u/1/r",
+      "transitionType": "reload",
+      "transitionQualifiers": [],
+      "lastRedirect": null,
+      "expected": "reload"
+    }
+  ]
+}

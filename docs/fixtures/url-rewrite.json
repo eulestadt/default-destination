@@ -1,0 +1,133 @@
+{
+  "description": "Pure rewriter cases. Implement googleAccount.rewrite(url, { accountIndex: 1 }) and generic rewrite. expected null means no change.",
+  "googleCalendar": [
+    {
+      "id": "root-slash",
+      "input": "https://calendar.google.com/",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/"
+    },
+    {
+      "id": "root-no-slash",
+      "input": "https://calendar.google.com",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/"
+    },
+    {
+      "id": "calendar-home",
+      "input": "https://calendar.google.com/calendar/",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/"
+    },
+    {
+      "id": "calendar-r",
+      "input": "https://calendar.google.com/calendar/r",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/r"
+    },
+    {
+      "id": "default-account-week",
+      "input": "https://calendar.google.com/calendar/u/0/r",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/r"
+    },
+    {
+      "id": "deep-event-no-account",
+      "input": "https://calendar.google.com/calendar/r/eventedit/abc?eid=xyz#hash",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/r/eventedit/abc?eid=xyz#hash"
+    },
+    {
+      "id": "deep-event-u0",
+      "input": "https://calendar.google.com/calendar/u/0/r/eventedit/abc?eid=xyz",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/r/eventedit/abc?eid=xyz"
+    },
+    {
+      "id": "already-dest",
+      "input": "https://calendar.google.com/calendar/u/1/r",
+      "intent": "enter",
+      "expected": null
+    },
+    {
+      "id": "other-account",
+      "input": "https://calendar.google.com/calendar/u/2/r",
+      "intent": "enter",
+      "expected": null
+    },
+    {
+      "id": "u0-back",
+      "input": "https://calendar.google.com/calendar/u/0/r",
+      "intent": "back_forward",
+      "expected": null
+    },
+    {
+      "id": "u0-same-origin",
+      "input": "https://calendar.google.com/calendar/u/0/r",
+      "intent": "same_origin_nav",
+      "expected": null
+    },
+    {
+      "id": "u0-chooser",
+      "input": "https://calendar.google.com/calendar/u/0/r",
+      "intent": "chooser",
+      "expected": null
+    },
+    {
+      "id": "u0-typed-explicit",
+      "input": "https://calendar.google.com/calendar/u/0/r",
+      "intent": "explicit_source",
+      "expected": null
+    },
+    {
+      "id": "http-upgrade-host-only",
+      "input": "http://calendar.google.com/",
+      "intent": "enter",
+      "expected": "https://calendar.google.com/calendar/u/1/"
+    }
+  ],
+  "genericPrefix": [
+    {
+      "id": "prefix-keep-tail",
+      "rule": {
+        "source": "https://app.example.com/",
+        "destination": "https://app.example.com/team/acme",
+        "matchMode": "prefix",
+        "destMode": "rewrite",
+        "preserveQuery": true,
+        "preserveHash": true
+      },
+      "input": "https://app.example.com/docs/intro?x=1",
+      "intent": "enter",
+      "expected": "https://app.example.com/team/acme/docs/intro?x=1"
+    },
+    {
+      "id": "fixed-replace",
+      "rule": {
+        "source": "https://www.example.com/",
+        "destination": "https://www.example.com/dashboard",
+        "matchMode": "prefix",
+        "destMode": "fixed",
+        "preserveQuery": true,
+        "preserveHash": false
+      },
+      "input": "https://www.example.com/?ref=nav#old",
+      "intent": "enter",
+      "expected": "https://www.example.com/dashboard?ref=nav"
+    },
+    {
+      "id": "fixed-no-change-when-already-there",
+      "rule": {
+        "source": "https://www.example.com/",
+        "destination": "https://www.example.com/dashboard",
+        "matchMode": "prefix",
+        "destMode": "fixed",
+        "preserveQuery": true,
+        "preserveHash": true
+      },
+      "input": "https://www.example.com/dashboard",
+      "intent": "enter",
+      "expected": null
+    }
+  ]
+}

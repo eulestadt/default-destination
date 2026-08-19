@@ -1,0 +1,23 @@
+{
+  "id": "seed-google-calendar-u1",
+  "name": "Work Google Calendar",
+  "enabled": true,
+  "source": "https://calendar.google.com/",
+  "destination": "https://calendar.google.com/calendar/u/1",
+  "matchMode": "host",
+  "destMode": "rewrite",
+  "preserveQuery": true,
+  "preserveHash": true,
+  "recipeId": "google-calendar-account",
+  "googleAccountIndex": 1,
+  "includeDefaultGoogleAccount": true,
+  "chooserOrigins": ["https://accounts.google.com"],
+  "excludePatterns": [],
+  "bypass": {
+    "onBackForward": true,
+    "onSameOriginLink": true,
+    "onExplicitSourceTyped": true,
+    "onChooser": true,
+    "duration": "tab"
+  }
+}

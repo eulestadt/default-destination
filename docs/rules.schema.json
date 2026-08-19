@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.default-destination/rules.schema.json",
+  "title": "Default Destination settings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "paused", "debugLogging", "rules"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "paused": { "type": "boolean" },
+    "debugLogging": { "type": "boolean" },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "enabled",
+        "createdAt",
+        "updatedAt",
+        "source",
+        "destination",
+        "matchMode",
+        "destMode",
+        "preserveQuery",
+        "preserveHash",
+        "excludePatterns",
+        "bypass"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "enabled": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "source": { "type": "string", "format": "uri" },
+        "destination": { "type": "string", "format": "uri" },
+        "matchMode": {
+          "type": "string",
+          "enum": ["prefix", "exact", "host", "wildcard", "regex"]
+        },
+        "destMode": { "type": "string", "enum": ["rewrite", "fixed"] },
+        "preserveQuery": { "type": "boolean" },
+        "preserveHash": { "type": "boolean" },
+        "recipeId": {
+          "type": "string",
+          "enum": ["google-calendar-account", "google-workspace-account"]
+        },
+        "googleAccountIndex": { "type": "integer", "minimum": 0, "maximum": 20 },
+        "includeDefaultGoogleAccount": { "type": "boolean" },
+        "chooserOrigins": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" }
+        },
+        "excludePatterns": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "bypass": { "$ref": "#/$defs/bypass" }
+      }
+    },
+    "bypass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "onBackForward",
+        "onSameOriginLink",
+        "onExplicitSourceTyped",
+        "onChooser",
+        "duration"
+      ],
+      "properties": {
+        "onBackForward": { "type": "boolean" },
+        "onSameOriginLink": { "type": "boolean" },
+        "onExplicitSourceTyped": { "type": "boolean" },
+        "onChooser": { "type": "boolean" },
+        "duration": {
+          "type": "string",
+          "enum": ["navigation", "tab", "session"]
+        }
+      }
+    }
+  }
+}
